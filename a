@@ -1,0 +1,2 @@
+@Field("new_field")
+private String newField;
