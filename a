@@ -1,2 +1,33 @@
-@Field("new_field")
-private String newField;
+spring:
+  datasource:
+    mysql:
+      url: jdbc:mysql://localhost:3306/mydb
+      username: root
+      password: pass
+      driver-class-name: com.mysql.cj.jdbc.Driver
+    oracle:
+      url: jdbc:oracle:thin:@localhost:1521:xe
+      username: oracleuser
+      password: pass
+      driver-class-name: oracle.jdbc.OracleDriver
+
+
+@Configuration
+@EnableTransactionManagement
+public class MysqlDataSourceConfig {
+    @Bean(name = "mysqlDataSource")
+    @ConfigurationProperties(prefix = "spring.datasource.mysql")
+    public DataSource mysqlDataSource() {
+        return DataSourceBuilder.create().build();
+    }
+
+    @Bean(name = "mysqlEntityManagerFactory")
+    public LocalContainerEntityManagerFactoryBean mysqlEntityManagerFactory(...) {
+        ...
+    }
+
+    @Bean(name = "mysqlTransactionManager")
+    public PlatformTransactionManager mysqlTransactionManager(...) {
+        ...
+    }
+}
